@@ -1,22 +1,49 @@
 function imgMask = generateFaceMask(imgIn)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-    YCbCr = im2double(rgb2ycbcr(imgIn));
+    
+    R = imgIn(:,:,1);
+    G = imgIn(:,:,2);
+    B = imgIn(:,:,3); 
 
+    YCbCr = rgb2ycbcr(imgIn);
+
+    Y = YCbCr(:,:,1);
     Cb = YCbCr(:,:,2);
     Cr = YCbCr(:,:,3);
     
-    CrLb = 0.55;
-    CrUb = 0.6;
-    
-    CbLb = 0.4;
-    CbUb = 0.56;
+  
     
     imgMask = zeros(size(Cb));
   
+    
+    
+    %R > 95 and
+    %G > 40 and
+    %B > 20 and
+    %R > G and
+    %R > B and
+    %| R - G | > 15 and
+    %A > 15 and
+    %Cr > 135 and
+    %Cb > 85 and
+    %Y > 80 and
+    %Cr <= (1.5862*Cb)+20 and
+    %Cr>=(0.3448*Cb)+76.2069 and
+    %Cr >= (-4.5652*Cb)+234.5652 and
+    %Cr <= (-1.15*Cb)+301.75 and
+    %Cr <= (-2.2857*Cb)+432.85
+    CrUb = 165;
+    CrLb = 110;
+    CbUb = 195;
+    CbLb = 80;
+    
+    
     for i = 1:length(imgMask(:,1))
         for j = 1:length(imgMask(1,:))
             if Cr(i,j) < CrUb && Cr(i,j) > CrLb && Cb(i,j) < CbUb && Cb(i,j) > CbLb
+            %if Cr(i,j) > 135 && Cb(i,j) > 85 && Y(i,j) > 80 && Cr(i,j) <= (1.5862*Cb(i,j))+20 && Cr(i,j)>=(0.3448*Cb(i,j))+76.2069 && Cr(i,j) <= (-1.15*Cb(i,j))+301.75 && Cr(i,j) <= (-2.2857*Cb(i,j))+432.85
+                 
                 imgMask(i,j) = 1;
             else
                 imgMask(i,j) = 0;
@@ -29,5 +56,7 @@ function imgMask = generateFaceMask(imgIn)
     imgMask = imdilate(imgMask, SE);
     imgMask = imerode(imgMask, SE);
 
+    imgMask = imgMask.*im2double(imgIn);
+    
 end
 
