@@ -51,10 +51,10 @@ function imgMask = generateFaceMask(imgIn)
     end
     
     
-    SE = strel('disk',35);
+    SE = strel('disk',20);
     imgMask = imdilate(imgMask, SE);
     imgMask = imerode(imgMask, SE);
-
+    %bweuler(imgMask)
     imgMask = imgMask.*im2double(imgIn);
     
 end

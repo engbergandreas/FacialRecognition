@@ -1,17 +1,18 @@
 
 %Load faces, start with one face to test
-img = im2double(imread('..\DB1/db1_01.jpg'));
+img = imread('..\DB2/cl_01.jpg');
 
 img = colorCorrection(img);
-imshow(img)
+
 faceMask = generateFaceMask(img);
+
+imshow(faceMask)
 %Tweak image
     %Take in a face
         %Color correction
         %Track facemask
         %Eyemask
         %eye_mask = eyeMask(img);
-        %Mouthmask
         %Clip face
     %Return facemask
 %The image is tweaked
