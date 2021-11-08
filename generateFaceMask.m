@@ -11,12 +11,9 @@ function imgMask = generateFaceMask(imgIn)
     Y = YCbCr(:,:,1);
     Cb = YCbCr(:,:,2);
     Cr = YCbCr(:,:,3);
-    
-  
-    
+
     imgMask = zeros(size(Cb));
-  
-    
+
     
     %R > 95 and
     %G > 40 and
@@ -33,16 +30,18 @@ function imgMask = generateFaceMask(imgIn)
     %Cr >= (-4.5652*Cb)+234.5652 and
     %Cr <= (-1.15*Cb)+301.75 and
     %Cr <= (-2.2857*Cb)+432.85
-    CrUb = 165;
-    CrLb = 110;
-    CbUb = 195;
-    CbLb = 80;
+    
+    CrUb = 0.6;
+    CrLb = 0.51;
+
+    CbUb = 0.56;
+    CbLb = 0.4;
     
     
     for i = 1:length(imgMask(:,1))
         for j = 1:length(imgMask(1,:))
-            if Cr(i,j) < CrUb && Cr(i,j) > CrLb && Cb(i,j) < CbUb && Cb(i,j) > CbLb
-            %if Cr(i,j) > 135 && Cb(i,j) > 85 && Y(i,j) > 80 && Cr(i,j) <= (1.5862*Cb(i,j))+20 && Cr(i,j)>=(0.3448*Cb(i,j))+76.2069 && Cr(i,j) <= (-1.15*Cb(i,j))+301.75 && Cr(i,j) <= (-2.2857*Cb(i,j))+432.85
+            %if Cr(i,j) < CrUb && Cr(i,j) > CrLb && Cb(i,j) < CbUb && Cb(i,j) > CbLb
+            if Cr(i,j) > 135 && Cb(i,j) > 85 && Y(i,j) > 80 && Cr(i,j) <= (1.5862*Cb(i,j))+20 && Cr(i,j)>=(0.3448*Cb(i,j))+76.2069 && Cr(i,j) <= (-1.15*Cb(i,j))+301.75 && Cr(i,j) <= (-2.2857*Cb(i,j))+432.85
                  
                 imgMask(i,j) = 1;
             else
@@ -52,7 +51,7 @@ function imgMask = generateFaceMask(imgIn)
     end
     
     
-    SE = strel('disk',8);
+    SE = strel('disk',35);
     imgMask = imdilate(imgMask, SE);
     imgMask = imerode(imgMask, SE);
 

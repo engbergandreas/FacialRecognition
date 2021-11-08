@@ -1,7 +1,4 @@
 function outImg = colorCorrection(inImg)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
-    outImg = inImg;
 
     red = inImg(:,:,1); 
     green = inImg(:,:,2); 
@@ -17,6 +14,16 @@ function outImg = colorCorrection(inImg)
     red = red.*alpha; 
     blue = blue.*beta; 
     
+    %rMax = max(red(:));
+    %gMax = max(green(:));
+    %bMax = max(blue(:));
+    
+    %alfa2 = gMax/rMax
+    %beta2 = gMax/bMax
+    
+    %red = red.*alfa2;
+    %blue = blue.*beta2;
+ 
     outImg(:,:,1)=red; 
     outImg(:,:,2)=green; 
     outImg(:,:,3)=blue;

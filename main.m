@@ -1,8 +1,9 @@
 
 %Load faces, start with one face to test
-img = imread('..\DB1/db1_01.jpg');
+img = im2double(imread('..\DB1/db1_01.jpg'));
 
 img = colorCorrection(img);
+imshow(img)
 faceMask = generateFaceMask(img);
 %Tweak image
     %Take in a face
@@ -15,7 +16,7 @@ faceMask = generateFaceMask(img);
     %Return facemask
 %The image is tweaked
 
-imshow(faceMask);
+%imshow(faceMask);
 
 %chroma_image=rgb2ycbcr(img);
 
