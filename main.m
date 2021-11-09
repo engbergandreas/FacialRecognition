@@ -1,6 +1,6 @@
 
 %Load faces, start with one face to test
-img = imread('..\DB1/db1_07.jpg');
+img = imread('..\DB2/cl_07.jpg');
 img = colorCorrection(img);
 
 imgD = im2double(img);
