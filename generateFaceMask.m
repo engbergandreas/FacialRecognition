@@ -43,24 +43,22 @@ function imgMask = generateFaceMask(imgIn)
     CbLb = 0.4;
     
     
-    for i = 1:length(imgMask(:,1))
+     for i = 1:length(imgMask(:,1))
         for j = 1:length(imgMask(1,:))
             %if Cr(i,j) < CrUb && Cr(i,j) > CrLb && Cb(i,j) < CbUb && Cb(i,j) > CbLb
-            if ( abs(R(i,j) - G(i,j)) > 15 && R(i,j) > B(i,j) && R(i,j) > G(i,j) && B(i,j) > 20 && G(i,j) > 40 && R(i,j) > 95 && Cr(i,j) >= (-4.5652*Cb(i,j))-234.5652 && Cr(i,j) > 135 && Cb(i,j) > 85 && Y(i,j) > 80 && Cr(i,j) <= (1.5862*Cb(i,j))+20 && Cr(i,j)>=(0.3448*Cb(i,j))+76.2069 && Cr(i,j) <= (-1.15*Cb(i,j))+301.75 && Cr(i,j) <= (-2.2857*Cb(i,j))+432.85) 
+            if (Cb(i,j) > 85 && Y(i,j) > 80 && Cr(i,j) <= (1.5862*Cb(i,j))+20 && Cr(i,j)>=(0.3448*Cb(i,j))+76.2069 && Cr(i,j) <= (-1.15*Cb(i,j))+301.75 && Cr(i,j) <= (-2.2857*Cb(i,j))+432.85) 
+            %if abs(R(i,j) - G(i,j)) > 15 && R(i,j) > B(i,j) && R(i,j) > G(i,j) && B(i,j) > 20 && G(i,j) > 40 && R(i,j) > 95 &&Cr(i,j) >= (0.93*Cb(i,j))+16.21 && Cr(i,j)<=(0.93*Cb(i,j))+93 && Cr(i,j) <= (-0.94*Cb(i,j))+288.97 && Cr(i,j) <= (-0.92*Cb(i,j))+ 231 && Cr(i,j) < 178 && Cr(i,j) > 125 && Cb(i,j) < 140 && Cb(i,j) > 80
                 imgMask(i,j) = 1;
             else
                 imgMask(i,j) = 0;
             end
-            
-           
-            
         end
     end
     
     
-    SE = strel('disk',25);
+    SE = strel('disk',13);
     imgMask = imdilate(imgMask, SE);
-    
+    imgMask = imdilate(imgMask, SE);
     imgMask = imerode(imgMask, SE);
     
     %bweuler(imgMask)
