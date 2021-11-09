@@ -1,6 +1,6 @@
 
 %Load faces, start with one face to test
-img = imread('..\DB1/db1_10.jpg');
+img = imread('..\DB1/db1_06.jpg');
 img = colorCorrection(img);
 
 imgD = im2double(img);
@@ -10,7 +10,7 @@ eyeMap = eyeMask(imgD);
 
 mult = eyeMap.*faceMask;
 
-imshow(mult)
+imshow(mult.*imgD)
 
 %Tweak image
     %Take in a face
