@@ -1,6 +1,14 @@
 
 %Load faces, start with one face to test
-img = imread('..\DB2/cl_07.jpg');
+img = imread('..\DB2/cl_10.jpg');
+
+eyecoords = findEyeCoordinates(img);
+
+imshow(img);
+hold on
+plot(eyecoords(:,1), eyecoords(:,2), 'rx');
+
+%{
 img = colorCorrection(img);
 
 imgD = im2double(img);
@@ -11,6 +19,7 @@ eyeMap = eyeMask(imgD);
 mult = eyeMap.*faceMask;
 
 imshow(mult.*imgD)
+%}
 
 %Tweak image
     %Take in a face
