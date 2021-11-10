@@ -1,4 +1,4 @@
-function imgMask = generateFaceMask(imgIn)
+function imgMask = generateFaceMask(imgIn, contrastShift)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
     
@@ -42,12 +42,15 @@ function imgMask = generateFaceMask(imgIn)
     CbUb = 0.56*255;
     CbLb = 0.4*255;
     
+    rLim = 95
+    bLim = 20
+   
     
      for i = 1:length(imgMask(:,1))
         for j = 1:length(imgMask(1,:))
             %if Cr(i,j) < CrUb && Cr(i,j) > CrLb && Cb(i,j) < CbUb && Cb(i,j) > CbLb
             %if (Cr(i,j) < 178 && Cr(i,j) > 125 && Cb(i,j) < 140 && Cb(i,j) > 80 && Cr(i,j) <= (1.5862*Cb(i,j))+20 && Cr(i,j)>=(0.3448*Cb(i,j))+76.2069 && Cr(i,j) <= (-1.15*Cb(i,j))+301.75 && Cr(i,j) <= (-2.2857*Cb(i,j))+432.85) 
-            if abs(R(i,j) - G(i,j)) > 15 && R(i,j) > B(i,j) && R(i,j) > G(i,j) && B(i,j) > 20 && G(i,j) > 40 && R(i,j) > 95 && Cr(i,j) >= (0.93*Cb(i,j))+16.21 && Cr(i,j)<=(0.93*Cb(i,j))+93 && Cr(i,j) <= (-0.94*Cb(i,j))+288.97 && Cr(i,j) <= (-0.92*Cb(i,j))+ 231 && Cr(i,j) < 178 && Cr(i,j) > 125 && Cb(i,j) < 140 && Cb(i,j) > 80
+            if abs(R(i,j) - G(i,j)) > 15 && R(i,j) > B(i,j) && R(i,j) > G(i,j) && B(i,j) > bLim && G(i,j) > 40 && R(i,j) > rLim && Cr(i,j) >= (0.93*Cb(i,j))+16.21 && Cr(i,j)<=(0.93*Cb(i,j))+93 && Cr(i,j) <= (-0.94*Cb(i,j))+288.97 && Cr(i,j) <= (-0.92*Cb(i,j))+ 231 && Cr(i,j) < 178 && Cr(i,j) > 125 && Cb(i,j) < 140 && Cb(i,j) > 80
             %if Cr(i,j) < 180 && Cr(i,j) > 125 && Cb(i,j) < 180 && Cb(i,j) > 116
              
                 imgMask(i,j) = 1;
@@ -57,11 +60,37 @@ function imgMask = generateFaceMask(imgIn)
         end
      end
     
-    SE = strel('disk',12);
+    SE = strel('disk',3);
     imgMask = imdilate(imgMask, SE);
-    SE = strel('square',40);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    
+    
+    SE = strel('square',90);
     imgMask = imerode(imgMask, SE);
     imgMask = imerode(imgMask, SE);
+    
+    SE = strel('disk',5);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+%     
+    
+   
+    
     
     
    imgMask = imbinarize(imgMask, 0.5);
