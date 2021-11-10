@@ -1,10 +1,7 @@
 function [output_image] = mouthMask(img, faceMask)
 %MOUTHMASK Summary of this function goes here
 %   Detailed explanation goes here
-img = im2double(img);
 img = img.*faceMask;
-
-imshow(img)
 
 imgChrome = rgb2ycbcr(img);
 Cb = mat2gray(imgChrome(:,:,2)) + 1;
