@@ -8,8 +8,8 @@ function outImg = colorCorrection(inImg)
     gMean = mean(green(:)); 
     bMean = mean(blue(:)); 
     
-    alpha = gMean/rMean 
-    beta = gMean/bMean 
+    alpha = gMean/rMean; 
+    beta = gMean/bMean;
     
     red = red.*alpha; 
     blue = blue.*beta; 

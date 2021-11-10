@@ -64,7 +64,7 @@ function imgMask = generateFaceMask(imgIn)
     imgMask = imerode(imgMask, SE);
     
     
-   
+   imgMask = imbinarize(imgMask, 0.5);
     
     
     
