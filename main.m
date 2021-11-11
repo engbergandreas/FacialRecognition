@@ -1,6 +1,6 @@
 %%Tweak image
 %Load faces, start with one face to test
-img = imread(['..\DB2/cl_08.jpg']);
+img = imread(['..\DB2/cl_09.jpg']);
 %Color correction
 img = colorCorrection(img);
 
@@ -24,10 +24,7 @@ eyeR = eyeCoords(2, :);
 normalface = normalizeFace(eyeL, eyeR, imgD);
 figure(1)
 imshow(normalface)
-axis on
-hold on;
 % Plot cross at row 100, column 50
-plot(eyeL(1), eyeL(2), 'r+', 'MarkerSize', 30, 'LineWidth', 2);
 
 %Clip face
 

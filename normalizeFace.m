@@ -26,10 +26,10 @@ else
 
 end
 
-Ltop = center + [hypotenuse*-0.9, -hypotenuse*0.45];
-Rbottom = center + [hypotenuse*0.9, hypotenuse*1.8];
+Ltop = center + [hypotenuse*-0.75, -hypotenuse*0.5];
+Rbottom = center + [hypotenuse*0.75, hypotenuse*1.5];
 
-outputImg = imcrop(rotatedImage, [Ltop Rbottom-Ltop]);
+outputImg = imresize(imcrop(rotatedImage, [Ltop Rbottom-Ltop]), [400, 300]);
 
 end
 
