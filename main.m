@@ -1,4 +1,4 @@
-
+%%Tweak image
 %Load faces, start with one face to test
 img = imread('..\DB2/cl_10.jpg');
 
@@ -12,8 +12,10 @@ plot(eyecoords(:,1), eyecoords(:,2), 'rx');
 img = colorCorrection(img);
 
 imgD = im2double(img);
+%Track facemask
 faceMask = generateFaceMask(img);
 
+%Eyemask
 eyeMap = eyeMask(imgD);
 
 mult = eyeMap.*faceMask;
@@ -21,13 +23,25 @@ mult = eyeMap.*faceMask;
 imshow(mult.*imgD)
 %}
 
-%Tweak image
+%Normalize the face
+eyeCoords=findEyeCoordinates(img);
+%Eyes according to our viewpoint, eyeL is the person's right eye.
+eyeL = eyeCoords(1, :);
+eyeR = eyeCoords(2, :);
+
+normalface = normalizeFace(eyeL, eyeR, imgD);
+figure(1)
+imshow(normalface)
+% Plot cross at row 100, column 50
+
+%Clip face
+
     %Take in a face
-        %Color correction
-        %Track facemask
-        %Eyemask
+
+        
+        
         %eye_mask = eyeMask(img);
-        %Clip face
+        
     %Return facemask
 %The image is tweaked
 
