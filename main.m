@@ -1,19 +1,25 @@
 %%Tweak image
 %Load faces, start with one face to test
-img = imread(['..\DB2/cl_09.jpg']);
+img = imread(['..\DB1\DB1/db1_03.jpg']);
 %Color correction
-img = colorCorrection(img);
+
+img = imrotate(img, 5);
+
 
 imgD = im2double(img);
 %Track facemask
-faceMask = generateFaceMask(img);
+
+
+
 
 %Eyemask
 eyeMap = eyeMask(imgD);
 
 mult = eyeMap.*faceMask;
 
-imshow(mult.*imgD)
+
+
+%imshow(temp.*imgD);
 
 %Normalize the face
 eyeCoords=findEyeCoordinates(img);
@@ -22,7 +28,8 @@ eyeL = eyeCoords(1, :);
 eyeR = eyeCoords(2, :);
 
 normalface = normalizeFace(eyeL, eyeR, imgD);
-figure(1)
+%imshow(normalface);
+%figure(1)
 imshow(normalface)
 % Plot cross at row 100, column 50
 

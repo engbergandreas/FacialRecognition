@@ -2,9 +2,21 @@ function [eyecoords] = findEyeCoordinates(inputImage)
 %Image input should be in uint8 for colorcorrectiona and mask to work?
 
 image = colorCorrection(inputImage);
+
+%Get face mask
 facemask = generateFaceMask(image);
 
 image = im2double(image);
+
+%Get mouth mask
+mouthImg = mouthMask(image, facemask);
+
+%Remove mouth from facemask
+facemask = facemask - mouthImg;
+
+%clamps from [0, 1]
+facemask = min(max(facemask, -1),1);
+
 %transform to YCbCr color space 
 chroma_img = rgb2ycbcr(image);
 
