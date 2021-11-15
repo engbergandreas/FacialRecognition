@@ -1,4 +1,5 @@
 function [eyecoords] = findEyeCoordinates(inputImage)
+Settings
 %Image input should be in uint8 for colorcorrectiona and mask to work?
 
 image = colorCorrection(inputImage);
@@ -30,7 +31,7 @@ eyemapc = histeq(eyemapc);
 
 %compute luminance eye map, test different structure elements and sizes
 %disk with radius 10 works fairly well for db1
-se = strel('disk', 10);
+se = strel('disk', LUMINANCE_EYE_MAP_DISK_SIZE);
 eyemapl = imdilate(Y, se) ./ (imerode(Y, se) + 1);
 
 %Combine both eye maps and mask with facemask
@@ -43,7 +44,8 @@ eyemap = imdilate(eyemap, se);
 eyemap = normalizeimg(eyemap);
 
 %create binary eyemap
-imbinary = eyemap > 0.75; %0.75 works fairly well for db1
+imbinary = eyemap > THRESHOLD_EYEMASK_BINARY; %0.75 works fairly well for db1
+
 
 se = strel('disk', 3);
 %close small gaps between objects, 
@@ -82,6 +84,16 @@ else
     %found 2 or less eye candidates use the given candidates as eye points
     eyecoords = centroid;
 end
-
+    if(eyecoords(1,1) < eyecoords(2,1))
+        lefteye = eyecoords(1,:);
+        righteye = eyecoords(2,:);
+    else
+        lefteye = eyecoords(2,:);
+        righteye = eyecoords(1,:);
+    end
+    
+    eyecoords = [lefteye; righteye];
+    
+end
 
 

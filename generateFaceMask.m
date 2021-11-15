@@ -42,8 +42,8 @@ function imgMask = generateFaceMask(imgIn, contrastShift)
     CbUb = 0.56*255;
     CbLb = 0.4*255;
     
-    rLim = 95
-    bLim = 20
+    rLim = 95;
+    bLim = 20;
    
     
      for i = 1:length(imgMask(:,1))

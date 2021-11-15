@@ -1,6 +1,7 @@
 %%Tweak image
 %Load faces, start with one face to test
 img = imread('..\DB2/cl_10.jpg');
+Settings
 
 eyecoords = findEyeCoordinates(img);
 
