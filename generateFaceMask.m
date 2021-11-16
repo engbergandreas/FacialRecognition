@@ -83,6 +83,9 @@ function imgMask = generateFaceMask(imgIn)
     imgMask = imdilate(imgMask, SE);
     imgMask = imdilate(imgMask, SE);
     imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    
     
     
     SE = strel('square',90);
@@ -100,7 +103,7 @@ function imgMask = generateFaceMask(imgIn)
     imgMask = imdilate(imgMask, SE);
     imgMask = imdilate(imgMask, SE);
     imgMask = imdilate(imgMask, SE);
-%     
+    
     
    
     

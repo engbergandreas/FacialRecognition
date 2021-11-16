@@ -2,11 +2,11 @@ function [eyecoords] = findEyeCoordinates(inputImage)
 %Image input should be in uint8 for colorcorrectiona and mask to work?
 
 image = colorCorrection(inputImage);
-
+image = im2double(image);
 %Get face mask
 facemask = generateFaceMask(image);
 
-image = im2double(image);
+
 
 %Get mouth mask
 mouthImg = mouthMask(image, facemask);

@@ -26,7 +26,7 @@ function outImg = colorCorrection(inImg)
     
     end
     
-  sizeIn = size(red);
+    sizeIn = size(red);
     rgbMax = 0;
     rgbMax = uint16(0);
     rMax = 0;
