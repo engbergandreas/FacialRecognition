@@ -1,28 +1,19 @@
 %%Tweak image
 %Load faces, start with one face to test
-img = imread('..\DB2/cl_10.jpg');
 Settings
 
-eyecoords = findEyeCoordinates(img);
+img = imread('..\DB2/cl_13.jpg');
 
+eyecoords = findEyeCoordinates(img);
+figure(1)
 imshow(img);
 hold on
 plot(eyecoords(:,1), eyecoords(:,2), 'rx');
+hold off
 
-%{
 img = colorCorrection(img);
 
 imgD = im2double(img);
-%Track facemask
-faceMask = generateFaceMask(img);
-
-%Eyemask
-eyeMap = eyeMask(imgD);
-
-mult = eyeMap.*faceMask;
-
-imshow(mult.*imgD)
-%}
 
 %Normalize the face
 eyeCoords=findEyeCoordinates(img);
@@ -31,8 +22,10 @@ eyeL = eyeCoords(1, :);
 eyeR = eyeCoords(2, :);
 
 normalface = normalizeFace(eyeL, eyeR, imgD);
-figure(1)
+figure(3);
 imshow(normalface)
+
+
 % Plot cross at row 100, column 50
 
 %Clip face
