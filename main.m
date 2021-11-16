@@ -1,17 +1,13 @@
 %%Tweak image
 %Load faces, start with one face to test
-img = imread(['..\DB1\DB1/db1_03.jpg']);
+img = imread(['..\DB1/db1_03.jpg']);
 %Color correction
 
-img = imrotate(img, 5);
-
-
+%img = imrotate(img, 5);
 imgD = im2double(img);
+imgD = colorCorrection(imgD);
 %Track facemask
-
-
-
-
+faceMask = generateFaceMask(imgD);
 %Eyemask
 eyeMap = eyeMask(imgD);
 

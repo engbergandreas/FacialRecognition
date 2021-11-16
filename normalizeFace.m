@@ -8,13 +8,13 @@ deltaX = eyeR(1) - eyeL(1);
 hypotenuse = norm(eyeL-eyeR);
 
 %Angle betwwen eyes
-degrees = asin(deltaX/hypotenuse);
+degrees = rad2deg(acos(deltaX/hypotenuse));
 
 %The way to rotate depends on which eye is the highest
 if eyeL(2) > eyeR(2)
     
     %Padd image so eyeR is the center of the image and use imrotate
-    rotatedImage=rotateAround(inputImg, eyeR(2), eyeR(1), degrees);
+    rotatedImage=rotateAround(inputImg, eyeR(2), eyeR(1), -degrees);
     center = eyeR - [hypotenuse/2, 0];
 
 else
