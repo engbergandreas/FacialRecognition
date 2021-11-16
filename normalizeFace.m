@@ -8,8 +8,8 @@ deltaX = eyeR(1) - eyeL(1);
 hypotenuse = norm(eyeL-eyeR);
 
 %Angle betwwen eyes
-degrees = acos(deltaX/hypotenuse)
-degrees = rad2deg(degrees)
+degrees = acos(deltaX/hypotenuse);
+degrees = rad2deg(degrees);
 
 %The way to rotate depends on which eye is the highest
 if eyeL(2) > eyeR(2)

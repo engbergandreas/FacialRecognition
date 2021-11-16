@@ -8,9 +8,9 @@ function outImg = colorCorrection(inImg)
     
    
     
-    rMean = mean(red(:))
-    gMean = mean(green(:)) 
-    bMean = mean(blue(:))
+    rMean = mean(red(:));
+    gMean = mean(green(:)); 
+    bMean = mean(blue(:));
     
     mL = 0.8;
     mU = 1.2;
@@ -18,8 +18,8 @@ function outImg = colorCorrection(inImg)
     
     if rMean <= mU*gMean && rMean >= mL*gMean
         
-        alpha = gMean/rMean 
-        beta = gMean/bMean
+        alpha = gMean/rMean;
+        beta = gMean/bMean;
 
         red = red.*alpha; 
         blue = blue.*beta; 
@@ -47,8 +47,8 @@ function outImg = colorCorrection(inImg)
         end
     end
 
-    alfa2 = double(gMax)/double(rMax)
-    beta2 = double(gMax)/double(bMax)
+    alfa2 = double(gMax)/double(rMax);
+    beta2 = double(gMax)/double(bMax);
     
     red = red.*alfa2;
     blue = blue.*beta2;
