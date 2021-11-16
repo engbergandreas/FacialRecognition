@@ -1,4 +1,4 @@
-function imgMask = generateFaceMask(imgIn, contrastShift)
+function imgMask = generateFaceMask(imgIn)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
     
