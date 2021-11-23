@@ -2,7 +2,9 @@ function [eyecoords] = findEyeCoordinates(inputImage)
 Settings
 %Image input should be in uint8 for colorcorrectiona and mask to work?
 
-image = colorCorrection(inputImage);
+image= inputImage;
+
+%image = colorCorrection(inputImage);
 
 %Get face mask
 facemask = generateFaceMask(image);
@@ -31,7 +33,8 @@ cbcb = Cb .* Cb;
 crcr_c = Cr_c .* Cr_c;
 cbcr = Cb./Cr;
 
-%Normalize squared values between 0 and 1
+%Normalize squared values between 0 and 1 - this guarantees that eyemapc
+%has values between 0 and 1
 cbcb = normalizeimg(cbcb);
 crcr_c = normalizeimg(crcr_c);
 cbcr = normalizeimg(cbcr);
@@ -88,14 +91,24 @@ if(length(centroid) > 2)
                 %This can be improved further by checking the distance of the pair
                 % of points to the middle in y-direction, the closer to the middle
                 % the better and probably more accurate that those are the eyes
+                
+                %can also check distance in x-direction from the center of
+                %mouth and make sure 1 eye candidate is on each side of the
+                %mouth 
             end
         end
     end
     eyecoords = eyepoints;
 else
     %found 2 or less eye candidates use the given candidates as eye points
+    %should have a backup case here if we only find one eye 
+    %eg take the given eye and another point to the left or right side of
+    %the mouth at the same height
     eyecoords = centroid;
 end
+
+    %Make sure left and right eye are in correct order of matrix given the
+    %x-coordinate of the eyes found, ie. [lefteye; righteye]
     if(eyecoords(1,1) < eyecoords(2,1))
         lefteye = eyecoords(1,:);
         righteye = eyecoords(2,:);
@@ -103,9 +116,7 @@ end
         lefteye = eyecoords(2,:);
         righteye = eyecoords(1,:);
     end
-    
     eyecoords = [lefteye; righteye];
-    
 end
 
 

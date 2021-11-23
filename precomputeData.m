@@ -35,9 +35,22 @@ meanFace = 1 / length(images) * sum(X,2); %mu
 
 diffFace = X - meanFace; %A where each col is phi = xi - mu
 
-C = diffFace' * diffFace; %16x16 matrix of eigenvectors
+[eigenVectors, eigenValues] = eig(diffFace' * diffFace);
+%Sort eigen values in descending order
+[eigenValues, order] = sort(diag(eigenValues), 'descend');
 
-eigenFaces = diffFace * C; %find the largest eigenvectors u_i of the n x n matrix AA^t 
+%Compute eigen faces
+eigenFaces = diffFace * eigenVectors; %u_i in slides
+eigenFaces = eigenFaces(:, order);
 
+%normalize eigenfaces
+for i = 1:size(eigenFaces,2)
+    eigenFaces(:,i) = eigenFaces(:,i) / norm(eigenFaces(:,i));
+end
+
+%feature vector 16x16, where each column represent each 
+%image weights for the 16 eigenfaces
 weights = eigenFaces' * diffFace; %feature vector 
+
+save data.mat meanFace eigenFaces weights;
 end

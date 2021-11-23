@@ -6,7 +6,7 @@ img = img.*faceMask;
 
 number_of_pixels = sum(faceMask(:));
 
-imshow(img)
+%imshow(img);
 
 imgChrome = rgb2ycbcr(img);
 Y = mat2gray(imgChrome(:,:,1)) + 1;

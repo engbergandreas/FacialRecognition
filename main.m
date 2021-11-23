@@ -1,30 +1,82 @@
 %%Tweak image
 %Load faces, start with one face to test
 Settings
+%[meanFace, eigenFaces, weights] = precomputeData("1");
+images = dir("../DB1/*.jpg");
 
-img = imread('..\DB2/cl_13.jpg');
+img = imread('../DB1/db1_01.jpg');
+%img = imread('../DB2/cl_16.jpg');
+%img = imread("../DB0/db0_4.jpg");
 
-eyecoords = findEyeCoordinates(img);
-figure(1)
+img = imrotate(img, 10);
+img(:,:,1) = img(:,:,1) - 0.2 * 255;
+
+figure(5)
 imshow(img);
-hold on
-plot(eyecoords(:,1), eyecoords(:,2), 'rx');
-hold off
 
 img = colorCorrection(img);
-
-imgD = im2double(img);
+%img = im2double(img);
 
 %Normalize the face
 eyeCoords=findEyeCoordinates(img);
 %Eyes according to our viewpoint, eyeL is the person's right eye.
-eyeL = eyeCoords(1, :);
-eyeR = eyeCoords(2, :);
+leftEye = eyeCoords(1, :);
+rightEye = eyeCoords(2, :);
 
-normalface = normalizeFace(eyeL, eyeR, imgD);
-figure(3);
+img = im2double(img);
+
+figure(1)
+imshow(img);
+hold on
+plot(eyeCoords(:,1),eyeCoords(:,2), 'rx');
+hold off
+
+normalface = normalizeFace(leftEye, rightEye, img);
+figure(2);
 imshow(normalface)
+normalface = rgb2gray(normalface);
 
+%{
+%Find out if image is in DB 
+height = NORMALIZED_FACE_HEIGHT;
+width = NORMALIZED_FACE_WIDTH;
+x = reshape(normalface, height * width, 1);
+
+facedifference = x - meanFace;
+
+featureVector =  eigenFaces' * facedifference;
+
+k = 6;
+%k = size(weights,2);
+errors = zeros(size(weights,2), 1);
+for i = 1:size(weights,2)
+   error = norm(featureVector(1:k) - weights(1:k,i));
+   errors(i,1) = error;
+end
+maxweight = max(errors);
+[minWeight, index] = min(errors / maxweight);
+errorThreshold = 0.3;
+e = errors/maxweight;
+
+if(minWeight < errorThreshold)
+    figure(4);
+    result = imread("../DB1/" + images(index).name);
+    imshow(result);
+else
+    result = 0
+end
+%}
+
+nrofweights = 8;
+threshold = 0.3;
+
+id = recognizeFace(normalface, nrofweights, threshold);
+
+if(id ~= 0) 
+    figure(4);
+    result = imread("../DB1/" + images(id).name);
+    imshow(result);
+end
 
 % Plot cross at row 100, column 50
 

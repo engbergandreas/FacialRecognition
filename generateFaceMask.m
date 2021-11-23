@@ -106,7 +106,7 @@ function imgMask = generateFaceMask(imgIn)
     
     
     
-   imgMask = imbinarize(imgMask, 0.5);
+   %imgMask = imbinarize(imgMask, 0.5);
     
     
     
