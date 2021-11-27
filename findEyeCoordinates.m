@@ -1,21 +1,22 @@
 function [eyecoords] = findEyeCoordinates(inputImage)
 %Image input should be in uint8 for colorcorrectiona and mask to work?
+image = im2double(inputImage);
+image = colorCorrection(image);
 
-image = colorCorrection(inputImage);
-image = im2double(image);
+
 %Get face mask
 facemask = generateFaceMask(image);
 
-
+%imshow(im2double(inputImage).*facemask);
 
 %Get mouth mask
-mouthImg = mouthMask(image, facemask);
-
-%Remove mouth from facemask
-facemask = facemask - mouthImg;
-
-%clamps from [0, 1]
-facemask = min(max(facemask, -1),1);
+% mouthImg = mouthMask(image, facemask);
+% 
+% %Remove mouth from facemask
+% facemask = facemask - mouthImg;
+% %imshow(mouthImg)
+% %clamps from [0, 1]
+% facemask = min(max(facemask, -1),1);
 
 %transform to YCbCr color space 
 chroma_img = rgb2ycbcr(image);
@@ -49,8 +50,10 @@ eyemapl = imdilate(Y, se) ./ (imerode(Y, se) + 1);
 %using facemask here gives better result when normalizing the image
 %facemask removes a lot of false eye candidates
 eyemap = eyemapc .* eyemapl .* facemask;
+%imshow(eyemap)
 %eyemap = eyemap .* facemask;
 eyemap = imdilate(eyemap, se);
+
 %normalize to bring the highest values to 1 -> easier to choose threshold 
 eyemap = normalizeimg(eyemap);
 
