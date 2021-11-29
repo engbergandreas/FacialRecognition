@@ -9,8 +9,6 @@ image= inputImage;
 %Get face mask
 facemask = generateFaceMask(image);
 
-
-
 %Get mouth mask
 mouthImg = mouthMask(image, facemask);
 

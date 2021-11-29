@@ -4,15 +4,16 @@ Settings
 %[meanFace, eigenFaces, weights] = precomputeData("1");
 images = dir("../DB1/*.jpg");
 
-img = imread('../DB1/db1_01.jpg');
+img = im2double(imread('../DB1/db1_01.jpg'));
 %img = imread('../DB2/cl_16.jpg');
-%img = imread("../DB0/db0_4.jpg");
+img = im2double(imread("../DB0/db0_2.jpg"));
 
-img = imrotate(img, 10);
-img(:,:,1) = img(:,:,1) - 0.2 * 255;
+%img = imrotate(img, 10, 'bicubic');
+%img(:,:,1) = img(:,:,1) - 0.2;
+%img(:,:,2) = img(:,:,2) - 0.1;
 
-figure(5)
-imshow(img);
+%figure(5)
+%imshow(img);
 
 img = colorCorrection(img);
 %img = im2double(img);
@@ -23,7 +24,7 @@ eyeCoords=findEyeCoordinates(img);
 leftEye = eyeCoords(1, :);
 rightEye = eyeCoords(2, :);
 
-img = im2double(img);
+%img = im2double(img);
 
 figure(1)
 imshow(img);
