@@ -1,7 +1,21 @@
 function outImg = colorCorrection(inImg)
 
+    sizeIn = size(inImg(:,:,1));
+    meanVal = 0;
+    meanValCounter = 0.0;
+    for i = 1:(sizeIn(1)-1)
+        for j = 1:(sizeIn(2)-1)
 
-
+           if inImg(i,j,1) == 0 && inImg(i,j,2) == 0 && inImg(i,j,3) == 0 
+           else
+              meanVal = meanVal + inImg(i,j,1) + inImg(i,j,2) + inImg(i,j,3);
+              meanValCounter = meanValCounter +3;
+           end
+        end
+    end
+    imgTotMean = meanVal/meanValCounter;
+    inImg = inImg*((154.8769/255)/imgTotMean);
+    
     red = (inImg(:,:,1));
     green = (inImg(:,:,2));
     blue = (inImg(:,:,3));
@@ -16,7 +30,7 @@ function outImg = colorCorrection(inImg)
     mU = 1.2;
 
 
-    if rMean <= mU*gMean && rMean >= mL*gMean
+  
 
         alpha = gMean/rMean;
         beta = gMean/bMean;
@@ -24,7 +38,7 @@ function outImg = colorCorrection(inImg)
         red = red.*alpha;
         blue = blue.*beta;
 
-    end
+
 
     sizeIn = size(red);
     rgbMax = 0;
@@ -46,7 +60,7 @@ function outImg = colorCorrection(inImg)
            end
         end
     end
-
+   
     alfa2 = double(gMax)/double(rMax);
     beta2 = double(gMax)/double(bMax);
 
