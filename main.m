@@ -6,7 +6,7 @@ images = dir("../DB1/*.jpg");
 
 img = im2double(imread('../DB1/db1_01.jpg'));
 %img = imread('../DB2/cl_16.jpg');
-img = im2double(imread("../DB0/db0_2.jpg"));
+%img = im2double(imread("../DB0/db0_2.jpg"));
 
 %img = imrotate(img, 10, 'bicubic');
 %img(:,:,1) = img(:,:,1) - 0.2;
@@ -14,7 +14,6 @@ img = im2double(imread("../DB0/db0_2.jpg"));
 
 %figure(5)
 %imshow(img);
-
 img = colorCorrection(img);
 %img = im2double(img);
 
@@ -35,6 +34,7 @@ hold off
 normalface = normalizeFace(leftEye, rightEye, img);
 figure(2);
 imshow(normalface)
+
 normalface = rgb2gray(normalface);
 
 %{

@@ -10,7 +10,7 @@ image= inputImage;
 facemask = generateFaceMask(image);
 
 %Get mouth mask
-mouthImg = mouthMask(image, facemask);
+[mouthImg, mouthCenter] = mouthMask(image, facemask);
 
 %Remove mouth from facemask
 facemask = facemask - mouthImg;
@@ -92,7 +92,7 @@ if(length(centroid) > 2)
                 
                 %can also check distance in x-direction from the center of
                 %mouth and make sure 1 eye candidate is on each side of the
-                %mouth 
+                %mouth. Use mouthCenter as the center point of the mouth 
             end
         end
     end

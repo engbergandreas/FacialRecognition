@@ -13,15 +13,15 @@ images = dir("../DB" + database + "/*.jpg");
 X = zeros(height * width, length(images));
 %Read every image from database and add them to the matrix X
 for i = 1:length(images)
-img = imread("../DB" + database + "/" + images(i).name);
+img = im2double(imread("../DB" + database + "/" + images(i).name));
 img = colorCorrection(img);
-imgD = im2double(img);
+%imgD = im2double(img);
 %Normalize the face
 eyeCoords=findEyeCoordinates(img);
 %Eyes according to our viewpoint, eyeL is the person's right eye.
 eyeL = eyeCoords(1, :);
 eyeR = eyeCoords(2, :);
-normalface = normalizeFace(eyeL, eyeR, imgD);
+normalface = normalizeFace(eyeL, eyeR, img);
 
 image = rgb2gray(normalface);
 x = reshape(image, height * width, 1);

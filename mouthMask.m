@@ -1,4 +1,4 @@
-function [output_image] = mouthMask(img, faceMask)
+function [output_image, mouthCenter] = mouthMask(img, faceMask)
 %MOUTHMASK Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -30,7 +30,25 @@ MouthMap = MouthMap > 0.2;
 MouthMap = bwareaopen(MouthMap, 200);
 MouthMap = imdilate(MouthMap, se1);
 
-output_image = MouthMap;
+%L are mouth candidates with increasing values [1 - nr of candidates] 
+L = bwlabel(MouthMap);
+%Get the area and center point of all mouth candidates
+stats = regionprops(L, "Area", "Centroid");
+area = zeros(size(stats));
+center = zeros(length(stats),2);
+%save intermidate variables
+for i = 1:length(stats)
+    area(i) = stats(i).Area;
+    center(i,:) = stats(i).Centroid;
+end
+%The mouth candidate with largest area is chosen
+largestMouth = find(max(area));
+%Create a new mask with only the largest mouth
+newMouthMask = zeros(size(MouthMap));
+newMouthMask(L == largestMouth) = 1;
+
+output_image = newMouthMask;
+mouthCenter = center(largestMouth, :);
 
 end
 
