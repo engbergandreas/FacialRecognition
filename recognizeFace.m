@@ -6,7 +6,7 @@ load data.mat eigenFaces meanFace weights;
 height = NORMALIZED_FACE_HEIGHT;
 width = NORMALIZED_FACE_WIDTH;
 %reshape image to vector format
-x = reshape(normalface, height * width, 1);
+x = reshape(rgb2gray(normalface), height * width, 1);
 
 %compute the difference between the given face and mean face of all faces
 %used in training
