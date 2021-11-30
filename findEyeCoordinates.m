@@ -7,10 +7,10 @@ image = inputImage;
 facemask = generateFaceMask(image);
 
 %Get mouth mask
-[mouthImg, mouthCenter] = mouthMask(image, facemask);
+%[mouthImg, mouthCenter] = mouthMask(image, facemask);
 
 %Remove mouth from facemask
-facemask = facemask - mouthImg;
+%facemask = facemask - mouthImg;
 
 %clamps from [0, 1]
 facemask = min(max(facemask, -1),1);
@@ -50,20 +50,23 @@ eyemap = eyemapc .* eyemapl .* facemask;
 %eyemap = eyemap .* facemask;
 eyemap = imdilate(eyemap, se);
 %normalize to bring the highest values to 1 -> easier to choose threshold 
-eyemap = normalizeimg(eyemap);
 
-%bw = zeros(size(eyemap));
-%bwSize = size(bw);
+bw = zeros(size(eyemap));
+bwSize = size(bw);
 
-%bw(floor(bwSize(1)/2.2),:) = 1;
+bw(floor(bwSize(1)/2.2) : floor(bwSize(1)-bwSize(1)/2.2), floor(bwSize(2)/6) : floor(bwSize(2) - bwSize(2)/6)) = 1;
 %bw(floor(bwSize(1)/2.5),floor(bwSize(2)-bwSize(2)/3)) = 1;
-%D1 = bwdist(bw,'euclidean');
-%weights = repmat(rescale(D1), [1 1 3]);
-%imshow(1.-weights)
+D1 = bwdist(bw,'euclidean');
+weights = rgb2gray(repmat(rescale(D1), [1 1 3]));
+
 %imshow(eyemap.*(1.-weights))
 %imshow(eyemap)
-%eyemap = eyemap.*(1.-weights);
+eyemap = eyemap.*(1.-weights);
 %imshow(eyemap)
+
+eyemap = normalizeimg(eyemap);
+
+
 
 %create binary eyemap
 imbinary = eyemap > THRESHOLD_EYEMASK_BINARY; %0.75 works fairly well for db1
@@ -116,14 +119,19 @@ end
 
     %Make sure left and right eye are in correct order of matrix given the
     %x-coordinate of the eyes found, ie. [lefteye; righteye]
-    if(eyecoords(1,1) < eyecoords(2,1))
-        lefteye = eyecoords(1,:);
-        righteye = eyecoords(2,:);
+    coordSize = size(eyecoords);
+    if coordSize(1)==2 && coordSize(2) ==2
+        if(eyecoords(1,1) < eyecoords(2,1))
+            lefteye = eyecoords(1,:);
+            righteye = eyecoords(2,:);
+        else
+            lefteye = eyecoords(2,:);
+            righteye = eyecoords(1,:);
+        end
+        eyecoords = [lefteye; righteye];
     else
-        lefteye = eyecoords(2,:);
-        righteye = eyecoords(1,:);
+        eyecoords = [[0,0]; [0,0]];
     end
-    eyecoords = [lefteye; righteye];
 end
 
 

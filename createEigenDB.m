@@ -2,14 +2,15 @@ function [topEigenFace,dist] = createEigenDB(dbPath, img)
     imageFiles = dir('C:\Users\jakob\Documents\GitHub\DB1\*.jpg');
 
     allImgVector = zeros(120000,16);
-    test = 0;
+
     for i=1:length(imageFiles)
         temp = imageFiles(i,1).name;
         temp = strcat(dbPath,temp);
         thisImg = imread(temp);
-        
-        eyeCoords = findEyeCoordinates(thisImg);
         thisImg = im2double(thisImg);
+        thisImg = colorCorrection(thisImg);
+        eyeCoords = findEyeCoordinates(thisImg);
+        
         normalizedFace = normalizeFace(eyeCoords(1,:),eyeCoords(2,:), thisImg);
        
         thisSize = size(normalizedFace);
@@ -34,9 +35,9 @@ function [topEigenFace,dist] = createEigenDB(dbPath, img)
     eyeCoords = findEyeCoordinates(img);
     
     imgCC = im2double(img);
-    eyeSize = size(eyeCoords)
-    
-    if(eyeSize(1,1) ~= 1)
+    eyeSize = size(eyeCoords);
+  
+    if eyeCoords(1,1)~= 0 && eyeCoords(2,1)~= 0 && eyeCoords(1,2)~= 0 && eyeCoords(2,2)~= 0 && eyeSize(1,1) ~= 1
     
     normalizedFace = normalizeFace(eyeCoords(1,:),eyeCoords(2,:), imgCC);
     %imshowpair(normalizedFace, test, 'montage')
@@ -54,7 +55,7 @@ function [topEigenFace,dist] = createEigenDB(dbPath, img)
     weightDiff;
    [kindaCuteDoe,imgNumber]=min(weightDiff);
     imgNumber;
-    threshold = 600;
+    threshold = 1000;
     topEigenFace = imgNumber;
     dist = kindaCuteDoe;
     if kindaCuteDoe < threshold

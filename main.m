@@ -4,7 +4,7 @@ Settings
 %[meanFace, eigenFaces, weights] = precomputeData("1");
 images = dir("../DB1/*.jpg");
 
-img = im2double(imread('../DB1/db1_01.jpg'));
+img = im2double(imread('../DB0/db0_4.jpg'));
 %img = imread('../DB2/cl_16.jpg');
 %img = im2double(imread("../DB0/db0_2.jpg"));
 
