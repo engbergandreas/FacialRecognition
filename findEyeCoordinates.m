@@ -1,8 +1,7 @@
 function [eyecoords] = findEyeCoordinates(inputImage)
 Settings
-%Image input should be in uint8 for colorcorrectiona and mask to work?
 
-%image = colorCorrection(inputImage);
+image = inputImage;
 
 %Get face mask
 facemask = generateFaceMask(image);
@@ -44,7 +43,6 @@ eyemapc = histeq(eyemapc);
 %disk with radius 10 works fairly well for db1
 se = strel('disk', LUMINANCE_EYE_MAP_DISK_SIZE);
 eyemapl = imdilate(Y, se) ./ (imerode(Y, se) + 1);
-%imshow(facemask);
 %Combine both eye maps and mask with facemask
 %using facemask here gives better result when normalizing the image
 %facemask removes a lot of false eye candidates
@@ -54,13 +52,13 @@ eyemap = imdilate(eyemap, se);
 %normalize to bring the highest values to 1 -> easier to choose threshold 
 eyemap = normalizeimg(eyemap);
 
-bw = zeros(size(eyemap));
-bwSize = size(bw);
+%bw = zeros(size(eyemap));
+%bwSize = size(bw);
 
-bw(floor(bwSize(1)/2.2),:) = 1;
+%bw(floor(bwSize(1)/2.2),:) = 1;
 %bw(floor(bwSize(1)/2.5),floor(bwSize(2)-bwSize(2)/3)) = 1;
-D1 = bwdist(bw,'euclidean');
-weights = repmat(rescale(D1), [1 1 3]);
+%D1 = bwdist(bw,'euclidean');
+%weights = repmat(rescale(D1), [1 1 3]);
 %imshow(1.-weights)
 %imshow(eyemap.*(1.-weights))
 %imshow(eyemap)
@@ -69,8 +67,6 @@ weights = repmat(rescale(D1), [1 1 3]);
 
 %create binary eyemap
 imbinary = eyemap > THRESHOLD_EYEMASK_BINARY; %0.75 works fairly well for db1
-
-
 
 se = strel('disk', 3);
 %close small gaps between objects, 
@@ -85,9 +81,6 @@ centroid = cat(1, stats.Centroid);
 %If we have more than 2 eye candidates go through all pairs
 %and compare their y-value differences, the pair of points with
 %lowest y-diff are more probable to be the true eyes
-
-
-
 if(length(centroid) > 2) 
     eyepoints = zeros(2);
     minY = realmax; %keep track of global y-minimum
