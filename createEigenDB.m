@@ -54,7 +54,7 @@ function [topEigenFace,dist] = createEigenDB(dbPath, img)
     weightDiff;
    [kindaCuteDoe,imgNumber]=min(weightDiff);
     imgNumber;
-    threshold = 1000;
+    threshold = 600;
     topEigenFace = imgNumber;
     dist = kindaCuteDoe;
     if kindaCuteDoe < threshold

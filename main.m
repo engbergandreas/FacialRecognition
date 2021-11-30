@@ -6,11 +6,11 @@ images = dir("../DB1/*.jpg");
 
 img = im2double(imread('../DB1/db1_01.jpg'));
 %img = imread('../DB2/cl_16.jpg');
-img = im2double(imread("../DB0/db0_2.jpg"));
+img = im2double(imread("../DB1/db1_16.jpg"));
 
 %img = imrotate(img, 10, 'bicubic');
 %img(:,:,1) = img(:,:,1) - 0.2;
-%img(:,:,2) = img(:,:,2) - 0.1;
+%img(:,:,2) = img(:,        :,2) - 0.1;
 
 %figure(5)
 %imshow(img);
@@ -71,10 +71,11 @@ end
 nrofweights = 8;
 threshold = 0.3;
 
-id = recognizeFace(normalface, nrofweights, threshold);
+id = recognizeFace(normalface, nrofweights, threshold)
 
 if(id ~= 0) 
     figure(4);
+    
     result = imread("../DB1/" + images(id).name);
     imshow(result);
 end

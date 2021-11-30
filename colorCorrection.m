@@ -14,13 +14,13 @@ function outImg = colorCorrection(inImg)
         end
     end
     imgTotMean = meanVal/meanValCounter;
-    inImg = inImg*((154.8769/255)/imgTotMean);
+    %inImg = inImg*((154.8769/255)/imgTotMean);
     
     red = (inImg(:,:,1));
     green = (inImg(:,:,2));
     blue = (inImg(:,:,3));
     
-   
+    
     
     rMean = mean(red(:));
     gMean = mean(green(:)); 
@@ -70,5 +70,6 @@ function outImg = colorCorrection(inImg)
     outImg(:,:,1)=red;
     outImg(:,:,2)=green;
     outImg(:,:,3)=blue;
+    
 
 end

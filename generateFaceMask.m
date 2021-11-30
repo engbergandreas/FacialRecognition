@@ -44,7 +44,6 @@ function imgMask = generateFaceMask(imgIn)
     
     rLim = double(95/255);
     bLim = double(20/255);
-   
     
      for i = 1:length(imgMask(:,1))
         for j = 1:length(imgMask(1,:))
@@ -72,7 +71,7 @@ function imgMask = generateFaceMask(imgIn)
             end
         end
      end
-    
+
     SE = strel('disk',3);
     imgMask = imdilate(imgMask, SE);
     imgMask = imdilate(imgMask, SE);
@@ -87,27 +86,34 @@ function imgMask = generateFaceMask(imgIn)
     imgMask = imdilate(imgMask, SE);
     imgMask = imdilate(imgMask, SE);
     imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
+    imgMask = imdilate(imgMask, SE);
     
     
-    SE = strel('square',110);
+    SE = strel('square',40);
     imgMask = imerode(imgMask, SE);
     imgMask = imerode(imgMask, SE);
-    
-    SE = strel('disk',5);
-    imgMask = imdilate(imgMask, SE);
-    imgMask = imdilate(imgMask, SE);
-    imgMask = imdilate(imgMask, SE);
-    imgMask = imdilate(imgMask, SE);
-    imgMask = imdilate(imgMask, SE);
-    
-    imgMask = imdilate(imgMask, SE);
-    imgMask = imdilate(imgMask, SE);
-    imgMask = imdilate(imgMask, SE);
-    imgMask = imdilate(imgMask, SE);
+    imgMask = imerode(imgMask, SE);
+    SE = strel('square',15);
+    imgMask = imerode(imgMask, SE);
+       
+%     SE = strel('disk',5);
+%     imgMask = imdilate(imgMask, SE);
+%     imgMask = imdilate(imgMask, SE);
+%     imgMask = imdilate(imgMask, SE);
+%     imgMask = imdilate(imgMask, SE);
+%     imgMask = imdilate(imgMask, SE);
+%     
+%     imgMask = imdilate(imgMask, SE);
+%     imgMask = imdilate(imgMask, SE);
+%     imgMask = imdilate(imgMask, SE);
+%     imgMask = imdilate(imgMask, SE);
     
        
-   %imgMask = imbinarize(imgMask, 0.5);
-    
+   imgMask = imbinarize(imgMask, 0.5);
+   
     
     
     %bweuler(imgMask)
