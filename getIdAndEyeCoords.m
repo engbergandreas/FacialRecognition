@@ -5,7 +5,7 @@ id = 0;
 %img = im2double(imgIn);
 img = imgIn;
 img = colorCorrection(img);
-imshow(img)
+
 eyeCoords = findEyeCoordinates(img);
 
 
