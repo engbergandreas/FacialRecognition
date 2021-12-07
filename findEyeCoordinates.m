@@ -60,16 +60,15 @@ D1 = bwdist(bw,'euclidean');
 weights = rgb2gray(repmat(rescale(D1), [1 1 3]));
 
 %imshow(eyemap.*(1.-weights))
-%imshow(eyemap)
+
 eyemap = eyemap.*(1.-weights);
-%imshow(eyemap)
 
 eyemap = normalizeimg(eyemap);
 
 
 
 %create binary eyemap
-imbinary = eyemap > THRESHOLD_EYEMASK_BINARY; %0.75 works fairly well for db1
+imbinary = eyemap > 0.7; %0.75 works fairly well for db1
 
 se = strel('disk', 3);
 %close small gaps between objects, 

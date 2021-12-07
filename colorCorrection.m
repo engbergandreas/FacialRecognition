@@ -31,20 +31,12 @@ function outImg = colorCorrection(inImg)
     rMean = rtot/((meanValCounter/3));
     gMean = gtot/((meanValCounter/3)); 
     bMean = btot/((meanValCounter/3));
-    
-    mL = 0.8;
-    mU = 1.2;
 
+    alpha = gMean/rMean;
+    beta = gMean/bMean;
 
-  
-
-        alpha = gMean/rMean;
-        beta = gMean/bMean;
-
-        red = red.*alpha;
-        blue = blue.*beta;
-
-
+    red = red.*alpha;
+    blue = blue.*beta;
 
     sizeIn = size(red);
     rgbMax = 0;

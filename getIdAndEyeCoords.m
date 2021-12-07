@@ -14,6 +14,7 @@ if eyeCoords ~= 0
     eyeR = eyeCoords(2, :);
 
     normalface = normalizeFace(eyeL, eyeR, img);
+    %imshow(normalface)
 
     nrofweights = 8;
     threshold = 0.2;
