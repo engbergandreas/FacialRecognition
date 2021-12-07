@@ -22,7 +22,7 @@ eyeCoords=findEyeCoordinates(img);
 eyeL = eyeCoords(1, :);
 eyeR = eyeCoords(2, :);
 normalface = normalizeFace(eyeL, eyeR, img);
-
+%imshow(normalface)
 image = rgb2gray(normalface);
 x = reshape(image, height * width, 1);
 

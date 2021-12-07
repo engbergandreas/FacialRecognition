@@ -30,7 +30,7 @@ maxweight = max(errors);
 
 %is the error less than given threshold
 errorThreshold = threshold;
-
+minWeight
 if(minWeight < errorThreshold)
     id = index;
     %figure(4);

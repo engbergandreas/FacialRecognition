@@ -2,9 +2,10 @@ function [id, eyeCoords] = getIdFromImg(imgIn)
 %GETIDFROMIMG Summary of this function goes here
 %   Detailed explanation goes here
 id = 0;
-img = im2double(imgIn);
+%img = im2double(imgIn);
+img = imgIn;
 img = colorCorrection(img);
-
+imshow(img)
 eyeCoords = findEyeCoordinates(img);
 
 
@@ -14,11 +15,11 @@ if eyeCoords ~= 0
     eyeR = eyeCoords(2, :);
 
     normalface = normalizeFace(eyeL, eyeR, img);
-    %imshow(normalface)
+
 
     nrofweights = 8;
     threshold = 0.2;
-
+    
     id = recognizeFace(normalface, nrofweights, threshold);
 end
 
