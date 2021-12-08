@@ -64,19 +64,6 @@ eyemap = eyemap .* (1-weights);
 
 eyemap = normalizeimg(eyemap);
 
-%bw = zeros(size(eyemap));
-%bwSize = size(bw);
-
-%bw(floor(bwSize(1)/2.2),:) = 1;
-%bw(floor(bwSize(1)/2.5),floor(bwSize(2)-bwSize(2)/3)) = 1;
-%D1 = bwdist(bw,'euclidean');
-%weights = repmat(rescale(D1), [1 1 3]);
-%imshow(1.-weights)
-%imshow(eyemap.*(1.-weights))
-%imshow(eyemap)
-%eyemap = eyemap.*(1.-weights);
-%imshow(eyemap)
-
 %create binary eyemap
 imbinary = eyemap > THRESHOLD_EYEMASK_BINARY; %0.75 works fairly well for db1
 
