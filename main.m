@@ -4,13 +4,17 @@ Settings
 %[meanFace, eigenFaces, weights] = precomputeData("1");
 images = dir("../DB1/*.jpg");
 
-img = im2double(imread('../DB1/db1_01.jpg'));
-%img = imread('../DB2/cl_16.jpg');
-%img = im2double(imread("../DB0/db0_2.jpg"));
+img = im2double(imread('../DB1/db1_07.jpg'));
+%img = im2double(imread('../DB2/cl_01.jpg'));
+%img = im2double(imread("../DB0/db0_3.jpg"));
+%img = im2double(imread("../DB3/image_0068.jpg"));
 
-%img = imrotate(img, 10, 'bicubic');
-%img(:,:,1) = img(:,:,1) - 0.2;
-%img(:,:,2) = img(:,:,2) - 0.1;
+
+
+%img = imrotate(img, 5, 'bicubic', 'crop');
+%img(:,:,:) = img(:,:,:) - 0.2;
+%img(:,:,:) = img(:,:,:) - 0.3;
+
 
 %figure(5)
 %imshow(img);
@@ -36,6 +40,8 @@ figure(2);
 imshow(normalface)
 
 normalface = rgb2gray(normalface);
+%figure(5);
+%imshow(normalface)
 
 %{
 %Find out if image is in DB 
@@ -69,9 +75,9 @@ end
 %}
 
 nrofweights = 8;
-threshold = 0.3;
+threshold = 0.25;
 
-id = recognizeFace(normalface, nrofweights, threshold);
+[id, minError] = recognizeFace(normalface, threshold);
 
 if(id ~= 0) 
     figure(4);
