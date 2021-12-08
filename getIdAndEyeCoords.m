@@ -16,7 +16,6 @@ if eyeCoords ~= 0
 
     normalface = normalizeFace(eyeL, eyeR, img);
 
-
     nrofweights = 8;
     threshold = 0.2;
     
