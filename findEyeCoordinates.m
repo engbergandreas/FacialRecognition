@@ -50,6 +50,18 @@ eyemap = eyemapc .* eyemapl .* facemask;
 %eyemap = eyemap .* facemask;
 eyemap = imdilate(eyemap, se);
 %normalize to bring the highest values to 1 -> easier to choose threshold 
+
+%Add weight image ontop to reduce outer values 
+bw = zeros(size(eyemap));
+bwSize = size(bw);
+ycenter = floor(bwSize(1)/2.2);
+height = 10;
+bw(ycenter-height:ycenter+height,:) = 1;
+%imshow(bw);
+D1 = bwdist(bw,'euclidean');
+weights = rgb2gray(repmat(rescale(D1), [1 1 3]));
+eyemap = eyemap .* (1-weights);
+
 eyemap = normalizeimg(eyemap);
 
 %bw = zeros(size(eyemap));
