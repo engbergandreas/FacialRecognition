@@ -45,8 +45,9 @@ end
 largestMouth = find(max(area));
 %Create a new mask with only the largest mouth
 newMouthMask = zeros(size(MouthMap));
-newMouthMask(L == largestMouth) = 1;
-
+if largestMouth ==1
+    newMouthMask(L == largestMouth) = 1;
+end
 output_image = newMouthMask;
 mouthCenter = center(largestMouth, :);
 

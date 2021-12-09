@@ -1,37 +1,32 @@
 function outImg = colorCorrection(inImg)
-
-    sizeIn = size(inImg(:,:,1));
-    meanVal = 0;
-    meanValCounter = 0.0;
-    for i = 1:(sizeIn(1)-1)
-        for j = 1:(sizeIn(2)-1)
-
-           if inImg(i,j,1) == 0 && inImg(i,j,2) == 0 && inImg(i,j,3) == 0 
-           else
-              meanVal = meanVal + inImg(i,j,1) + inImg(i,j,2) + inImg(i,j,3);
-              meanValCounter = meanValCounter +3;
-           end
-        end
-    end
-    imgTotMean = meanVal/meanValCounter;
-    %inImg = inImg*((154.8769/255)/imgTotMean);
     
-    
-    maxgreen = max(max(inImg(:,:,2)));
-    inImg(:,:,2) = inImg(:,:,2) ./ maxgreen;
+% ==========Deprecated=========
+%     inImg = inImg*((154.8769/255)/imgTotMean);
+%     maxgreen = max(max(inImg(:,:,2)))
+%     inImg(:,:,2) = inImg(:,:,2) ./ maxgreen;
+
     
     red = (inImg(:,:,1));
     green = (inImg(:,:,2));
     blue = (inImg(:,:,3));
-    
-    
-    
+
+    %=====Remap tone=========
+    maxred = max(max(inImg(:,:,1)));
+    maxgreen = max(max(inImg(:,:,2)));
+    maxblue = max(max(inImg(:,:,3)));
+
+    minred = min(min(inImg(:,:,1)));
+    mingreen = min(min(inImg(:,:,2)));
+    minblue = min(min(inImg(:,:,3)));
+
+    red = interp1([minred,maxred],[0,1],red);
+    green = interp1([mingreen,maxgreen],[0,1],green);
+    blue = interp1([minblue,maxblue],[0,1],blue);
+
+    %========Gray world============
     rMean = mean(red(:));
     gMean = mean(green(:)); 
     bMean = mean(blue(:));
-    
-    mL = 0.8;
-    mU = 1.2;
 
     alpha = gMean/rMean;
     beta = gMean/bMean;
@@ -40,11 +35,11 @@ function outImg = colorCorrection(inImg)
     blue = blue.*beta;
     
     sizeIn = size(red);
-    rgbMax = 0;
     rgbMax = uint16(0);
     rMax = 0;
     gMax = 0;
     bMax = 0;
+    %========White patch============
     for i = 1:(sizeIn(1)-1)
         for j = 1:(sizeIn(2)-1)
 

@@ -115,14 +115,19 @@ end
 
     %Make sure left and right eye are in correct order of matrix given the
     %x-coordinate of the eyes found, ie. [lefteye; righteye]
-    if(eyecoords(1,1) < eyecoords(2,1))
-        lefteye = eyecoords(1,:);
-        righteye = eyecoords(2,:);
+    eyeSize = size(eyecoords);
+    if eyeSize(1) == 2 && eyeSize(2) == 2
+        if(eyecoords(1,1) < eyecoords(2,1))
+            lefteye = eyecoords(1,:);
+            righteye = eyecoords(2,:);
+        else
+            lefteye = eyecoords(2,:);
+            righteye = eyecoords(1,:);
+        end
+        eyecoords = [lefteye; righteye];
     else
-        lefteye = eyecoords(2,:);
-        righteye = eyecoords(1,:);
+        eyecoords = 0;
     end
-    eyecoords = [lefteye; righteye];
 end
 
 
