@@ -1,4 +1,4 @@
-function id = recognizeFace(normalface, kWeights, threshold)
+function [id,dist] = recognizeFace(normalface, kWeights, threshold)
 %return id of given normalised face
 Settings
 load data.mat eigenFaces meanFace weights;
@@ -30,7 +30,7 @@ maxweight = max(errors);
 
 %is the error less than given threshold
 errorThreshold = threshold;
-
+dist = minWeight;
 if(minWeight < errorThreshold)
     id = index;
     %figure(4);
