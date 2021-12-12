@@ -19,27 +19,31 @@ for k = 1:nrofclasses
     subdb = k;
     images = dir("../DB" + database + "/" + subdb + "/*.jpg");
     nrofTrainingImages(k) = length(images);
-    
+    imlen = length(images);
     %Read every image from sub directory and store meanface of the class
     %and all of the images read
     meanface = zeros(height * width, 1);
-    for i = 1:length(images)
+    for i = 1:imlen
         img = im2double(imread("../DB" + database + "/" + subdb +"/" + images(i).name));
         %Color correct image
         img = colorCorrection(img);
         %Normalize the face from eye coordinates
         eyeCoords=findEyeCoordinates(img);
         %Eyes according to our viewpoint, eyeL is the person's right eye.
-        eyeL = eyeCoords(1, :);
-        eyeR = eyeCoords(2, :);
-        normalface = normalizeFace(eyeL, eyeR, img);
-        
-        image = rgb2gray(normalface);
-        x = reshape(image, height * width, 1);
-        meanface = meanface + x; %class meanface 
-        
-        allfaces(:,counter) = x;
-        counter = counter + 1;
+        if eyeCoords ~= 0
+            eyeL = eyeCoords(1, :);
+            eyeR = eyeCoords(2, :);
+            normalface = normalizeFace(eyeL, eyeR, img);
+
+            image = rgb2gray(normalface);
+            x = reshape(image, height * width, 1);
+            meanface = meanface + x; %class meanface 
+
+            allfaces(:,counter) = x;
+            counter = counter + 1;
+        else
+            nrofTrainingImages(k) = nrofTrainingImages(k)-1;
+        end
     end
     
     meanFaces(:,k) = meanface ./ nrofTrainingImages(k);
