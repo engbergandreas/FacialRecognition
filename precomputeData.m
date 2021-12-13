@@ -52,5 +52,5 @@ end
 %image weights for the 16 eigenfaces
 weights = eigenFaces' * diffFace; %feature vector 
 
-save data.mat meanFace eigenFaces weights;
+save dataEigenFaces.mat meanFace eigenFaces weights;
 end
