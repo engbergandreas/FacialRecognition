@@ -19,9 +19,9 @@ function outImg = colorCorrection(inImg)
     mingreen = min(min(inImg(:,:,2)));
     minblue = min(min(inImg(:,:,3)));
 
-%     red = interp1([minred,maxred],[0,1],red);
-%     green = interp1([mingreen,maxgreen],[0,1],green);
-%     blue = interp1([minblue,maxblue],[0,1],blue);
+    red = interp1([minred,maxred],[0,1],red);
+    green = interp1([mingreen,maxgreen],[0,1],green);
+    blue = interp1([minblue,maxblue],[0,1],blue);
 
     
     
